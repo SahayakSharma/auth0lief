@@ -18,12 +18,13 @@ export default function SetNewLocation({addToLocation}:{addToLocation:(newLocati
         state:'',
         city:'',
         lat:0,
-        long:0
+        long:0,
+        address:''
     })
-
+    const [isDialogOpen,setIsDialogOpen]=useState<boolean>(false)
     async function registerNewAddress(){
         const instance=FirestoreConfig.getInstance();
-        if(newLocation.city=='' || newLocation.state=='' || newLocation.lat==0 || newLocation.long==0){
+        if(newLocation.city=='' || newLocation.state=='' || newLocation.lat==0 || newLocation.long==0 || newLocation.address==''){
             alert('incomplete information provided')
             return;
         }
@@ -39,6 +40,7 @@ export default function SetNewLocation({addToLocation}:{addToLocation:(newLocati
                 created_at:new Date(),
                 updated_at:new Date()
             })
+            setIsDialogOpen(false)
         }
         catch(err){
             if(err instanceof Error){
@@ -48,9 +50,9 @@ export default function SetNewLocation({addToLocation}:{addToLocation:(newLocati
     }
 
     return (
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger>
-                <div className="px-4 py-3 rounded-md bg-black text-white text-center font-medium cursor-pointer">
+                <div className="px-4 py-3 rounded-md bg-black text-white text-center font-medium cursor-pointer" onClick={()=>setIsDialogOpen(true)}>
                     Register New Location
                 </div>
             </DialogTrigger>
@@ -64,13 +66,15 @@ export default function SetNewLocation({addToLocation}:{addToLocation:(newLocati
                     <Input onChange={(e)=>setNewLocation(prev=>({...prev,state:e.target.value}))}/>
                     <Label>City</Label>
                     <Input onChange={(e)=>setNewLocation(prev=>({...prev,city:e.target.value}))}/>
+                    <Label>Full Address</Label>
+                    <Input onChange={(e)=>setNewLocation(prev=>({...prev,address:e.target.value}))}/>
                     <div className="w-full flex gap-5">
                         <div className="w-[50%] flex flex-col gap-2">
                             <Label>Latitude</Label>
                             <Input type="number" onChange={(e)=>setNewLocation(prev=>({...prev,lat:Number(e.target.value)}))}/>
                         </div>
                         <div className="w-[50%] flex flex-col gap-2">
-                            <Label>Latitude</Label>
+                            <Label>Longitude</Label>
                             <Input type="number" onChange={(e)=>setNewLocation(prev=>({...prev,long:Number(e.target.value)}))}/>
                         </div>
                     </div>

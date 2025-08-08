@@ -1,7 +1,9 @@
+import StaffList from "@/components/helper/StaffList";
+
 export default function StaffDetails(){
     return(
-        <div>
-            this is staff details
+        <div className="w-full h-full">
+            <StaffList/>
         </div>
     )
 }
