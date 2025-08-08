@@ -1,8 +1,10 @@
+import AdminDashboard from "@/components/Admin/AdminDashboard";
+import StaffDashboard from "@/components/Staff/StaffDashboard";
+import { UserProvider } from "@/context/useContext";
 import { auth0 } from "@/lib/auth0"; // Adjust path if your auth0 client is elsewhere
 
 export default async function Home() {
   const session = await auth0.getSession();
-
   if (!session) {
     return (
       <main>
@@ -12,10 +14,15 @@ export default async function Home() {
     );
   }
 
+
+
   return (
     <main>
-      <h1>Welcome, {session.user.email}</h1>
-      <a href="/auth/logout">logout</a>
+      <UserProvider>
+        {
+          session.user.email === 'admin@gmail.com' ? <AdminDashboard /> : <StaffDashboard />
+        }
+      </UserProvider>
     </main>
   );
 }
