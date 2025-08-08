@@ -1,14 +1,16 @@
 
-import { auth0 } from "@/lib/auth0"
+import AdminContentPannel from "./AdminContentPannel";
+import AdminSidebar from "./SideBar";
+import { TabContextProvider } from "@/context/tabContext";
 
-export default async function AdminDashboard(){
+export default function AdminDashboard() {
 
-    const session=await auth0.getSession();
-
-    return(
-        <main>
-            ha ha I am admin
-            <a href="/auth/logout">logout</a>
+    return (
+        <main className="w-full h-screen flex">
+            <TabContextProvider>
+                <AdminSidebar />
+                <AdminContentPannel/>
+            </TabContextProvider>
         </main>
     )
 }

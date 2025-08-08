@@ -1,0 +1,41 @@
+'use client'
+import { FirestoreConfig } from "@/config/firestoreConfig"
+import { collection, DocumentData, getDocs, query } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import SetNewLocation from "@/components/helper/SetNewLocation";
+
+export default function Location(){
+
+    const [loading,setLoading]=useState<boolean>(true);
+    const [locations,setLocations]=useState<DocumentData[]>([]);
+
+    async function getLocations(){
+        const instance=FirestoreConfig.getInstance();
+        try{
+            const snap=await getDocs(query(collection(instance.getDb(),'Locations')));
+            setLocations([])
+            snap.forEach(doc=>{
+                setLocations(prev=>([...prev,{id:doc.id,...doc.data()}]));
+            })
+            setLoading(false);
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+
+    function addToLocation(newLocation:DocumentData){
+        setLocations(prev=>([...prev,newLocation]))
+    }
+
+    useEffect(()=>{
+        getLocations();
+    },[])
+    return(
+        <main className="w-full h-full">
+            <div className="w-full h-20 flex justify-end">
+               <SetNewLocation addToLocation={addToLocation}/>
+            </div>
+        </main>
+    )
+}
