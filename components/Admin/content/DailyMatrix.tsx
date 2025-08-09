@@ -15,7 +15,7 @@ export default function DailyMatrix() {
         clockOut: 0,
         hours: 0
     })
-
+    
     function minutesBetween(ts1: Timestamp, ts2: Timestamp): number {
         const date1 = ts1.toDate();
         const date2 = ts2.toDate();
@@ -33,15 +33,16 @@ export default function DailyMatrix() {
         try {
             const snap = await getDocs(query(collection(instance.getDb(), 'Activities'), where('clock_in_time', '>=', last24h)))
             setData([])
+            setCardData({clockOut:0,hours:0})
             snap.forEach(doc => {
                 setData(prev => ([...prev, { id: doc.id, ...doc.data() }]));
                 if (doc.data().clock_out_time) {
                     const hours = minutesBetween(doc.data().clock_in_time, doc.data().clock_out_time);
-                    setCardData(prev => ({ ...prev, clockOut: cardData.clockOut + 1, hours: cardData.hours + hours }))
+                    setCardData(prev => ({ ...prev, clockOut: prev.clockOut + 1, hours: prev.hours + hours }))
                 }
                 else {
                     const hours = minutesBetween(doc.data().clock_in_time, Timestamp.fromDate(new Date()));
-                    setCardData(prev => ({ ...prev, clockOut: cardData.clockOut + 1, hours: cardData.hours + hours }))
+                    setCardData(prev => ({ ...prev, hours: prev.hours + hours }))
                 }
             })
             setLoading(false)

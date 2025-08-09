@@ -55,7 +55,7 @@ export default function ActiveStaff({ data }: { data: DocumentData[] }) {
                 {
                     data.map((d, index) => (
                         <TableRow key={index}>
-                            <TableCell className="font-medium">{index}</TableCell>
+                            <TableCell className="font-medium">{index+1}</TableCell>
                             <TableCell>{d.user_details?.name}</TableCell>
                             <TableCell>{d.user_details?.email}</TableCell>
                             <TableCell>{formatDate(d.clock_in_time)}</TableCell>

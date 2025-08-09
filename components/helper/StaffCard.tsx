@@ -11,6 +11,7 @@ import { DocumentData } from "firebase/firestore"
 import Image from "next/image"
 import { Label } from "../ui/label"
 import { useState } from "react"
+import StaffStatus from "./StaffStatus"
 
 export default function StaffCard({ staffDetail }: { staffDetail: DocumentData }) {
     const [isActive,setIsActive]=useState<boolean>(false)
@@ -49,7 +50,7 @@ export default function StaffCard({ staffDetail }: { staffDetail: DocumentData }
                     <Label className="font-light py-2">{staffDetail.last_clocked_in ? formatDate(staffDetail?.created_at) : 'Not clocked in yet'}</Label>
                 </div>
                 <div className="mx-auto border-[1px] border-black rounded-sm px-7 py-1 text-center text-[12px] my-5 hover:bg-black hover:text-white w-fit">
-                    <p>View Profile</p>
+                    <StaffStatus id={staffDetail.id}/>
                 </div>
             </CardContent>
         </Card>
