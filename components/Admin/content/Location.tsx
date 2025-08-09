@@ -26,6 +26,10 @@ export default function Location() {
         }
     }
 
+    function removeLocation(id:string){
+        const filteredLocations=locations.filter(a=>a.id!=id);
+        setLocations(filteredLocations)
+    }
     function addToLocation(newLocation: DocumentData) {
         setLocations(prev => ([...prev, newLocation]))
     }
@@ -44,7 +48,7 @@ export default function Location() {
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
                     <p className="text-lg font-medium text-gray-600">Loading team members...</p>
                 </div>
-            </div> : <LocationList locations={locations}/>
+            </div> : <LocationList locations={locations} removeLocation={removeLocation}/>
             }
         </main>
     )

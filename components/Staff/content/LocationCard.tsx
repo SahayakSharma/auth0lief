@@ -10,9 +10,9 @@ import {
 import { DocumentData } from "firebase/firestore"
 import { Calendar, Clock, MapPin, MapPinHouse, MousePointer2, Navigation, Trash } from "lucide-react"
 import { useState } from "react"
-import { Badge } from "../ui/badge"
-import DeleteLocation from "./DeleteLocation"
-export default function LocationCard({ location,removeLocation }: { location: DocumentData,removeLocation:(id:string)=>void }) {
+import { Badge } from "@/components/ui/badge"
+import ClockIn from "./ClockIn"
+export default function LocationCard({ location,setClockedInNow }: { location: DocumentData,setClockedInNow:()=>void }) {
     const [isHover, setIsHover] = useState<boolean>(false)
 
     const formatDate = (timestamp: any) => {
@@ -84,11 +84,8 @@ export default function LocationCard({ location,removeLocation }: { location: Do
                         <p className="text-[13px] font-light">{location?.long}</p>
                     </div>
                 </div>
-                <div className="flex gap-5 items-center">
-                    <div className="my-5  border-[1px] border-[#e6e6e6] rounded-md py-2 flex-1 text-center cursor-pointer hover:bg-black  hover:text-white">
-                        <p className="text-[15px]">View on Map</p>
-                    </div>
-                    <DeleteLocation id={location?.id} location={location} removeLocation={removeLocation}/>
+                <div className="w-full flex justify-center">
+                    <ClockIn registeredLocation={location} setClockedInNow={setClockedInNow}/>
                 </div>
             </CardContent>
         </Card>
