@@ -14,13 +14,13 @@ export default async function Home() {
           <p className="text-gray-500 text-sm">Please sign up or log in to continue</p>
           <div className="flex flex-col gap-3">
             <a
-              href="/api/auth/login?screen_hint=signup"
+              href="/auth/login?screen_hint=signup"
               className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
             >
               Sign Up
             </a>
             <a
-              href="/api/auth/login"
+              href="/auth/login"
               className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition"
             >
               Log In
