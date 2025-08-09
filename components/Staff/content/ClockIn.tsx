@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import {getDistance} from 'geolib'
+import { getDistance } from 'geolib'
 import {
     Dialog,
     DialogContent,
@@ -16,7 +16,7 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-export default function ClockIn({ registeredLocation,setClockedInNow }: { registeredLocation: DocumentData,setClockedInNow:()=>void }) {
+export default function ClockIn({ registeredLocation, setClockedInNow }: { registeredLocation: DocumentData, setClockedInNow: () => void }) {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(true);
     const [errorMsg, setErrorMsg] = useState<GeolocationPositionError | null>(null)
@@ -24,8 +24,8 @@ export default function ClockIn({ registeredLocation,setClockedInNow }: { regist
         lat: 0,
         long: 0
     })
-    const [note,setNote]=useState<string>('')
-    const {user}=useUser();
+    const [note, setNote] = useState<string>('')
+    const { user } = useUser();
     function getCurrentLocation() {
         setLoading(true)
         navigator.geolocation.getCurrentPosition(
@@ -43,52 +43,54 @@ export default function ClockIn({ registeredLocation,setClockedInNow }: { regist
         setLoading(false)
     }
 
-    async function confirmCheckIn(){
+    async function confirmCheckIn() {
         setLoading(true)
-        if(location.lat==0 || location.long==0){
+        if (location.lat == 0 || location.long == 0) {
             toast("Location invalid")
             setIsOpen(false)
+            setLoading(false)
             return;
         }
-        if(!user?.sub) return;
-        const check=checkIsInRange();
-        if(!check){
+        if (!user?.sub) return;
+        const check = checkIsInRange();
+        if (!check) {
             setIsOpen(false)
             toast("You are not within a valid location")
             return;
         }
-        const instance=FirestoreConfig.getInstance()
-        try{
-            const payload={
-                userId:user?.sub,
-                clock_in_time:serverTimestamp(),
-                clock_in_location:registeredLocation.id,
-                clock_in_city:registeredLocation.city,
-                clock_in_state:registeredLocation.state,
-                clock_in_address:registeredLocation.address,
-                additional_text:note,
-                user_details:user
+        const instance = FirestoreConfig.getInstance()
+        try {
+            const payload = {
+                userId: user?.sub,
+                clock_in_time: serverTimestamp(),
+                clock_in_location: registeredLocation.id,
+                clock_in_city: registeredLocation.city,
+                clock_in_state: registeredLocation.state,
+                clock_in_address: registeredLocation.address,
+                additional_text: note,
+                user_details: user
             }
-            await addDoc(collection(instance.getDb(),'Activities'),payload)
-            await updateDoc(doc(instance.getDb(),'Users',user?.sub),{
-                last_clocked_in:serverTimestamp()
+            await addDoc(collection(instance.getDb(), 'Activities'), payload)
+            await updateDoc(doc(instance.getDb(), 'Users', user?.sub), {
+                last_clocked_in: serverTimestamp()
             })
             setClockedInNow()
+
+        }
+        catch (err) {
+            if (err instanceof Error) toast(err.message);
+        }
+        finally {
             setLoading(false)
-        }
-        catch(err){
-            if(err instanceof Error)toast(err.message);
-        }
-        finally{
             setIsOpen(false)
         }
 
     }
-    
-    function checkIsInRange():boolean{
-        const distance=getDistance({latitude:location.lat,longitude:location.long},{latitude:registeredLocation.lat,longitude:registeredLocation.long});
-        const threshold=registeredLocation.perimeter*1000;
-        if(distance <= threshold){
+
+    function checkIsInRange(): boolean {
+        const distance = getDistance({ latitude: location.lat, longitude: location.long }, { latitude: registeredLocation.lat, longitude: registeredLocation.long });
+        const threshold = registeredLocation.perimeter * 1000;
+        if (distance <= threshold) {
             return true
         }
         return false
@@ -141,8 +143,10 @@ export default function ClockIn({ registeredLocation,setClockedInNow }: { regist
                                     </span>
                                 </div>
                             </div>
-                            <Label>Additional Note</Label>
-                            <Input value={note} onChange={(e)=>setNote(e.target.value)}/>
+                            <div className="py-5">
+                                <Label>Additional Note</Label>
+                                <Input value={note} onChange={(e) => setNote(e.target.value)} className="mt-1"/>
+                            </div>
                             <Button onClick={confirmCheckIn} disabled={errorMsg != null} className="w-full">Confirm Check In</Button>
                         </div>
                 }

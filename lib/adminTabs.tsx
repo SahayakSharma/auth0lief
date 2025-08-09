@@ -1,4 +1,4 @@
-import { AimOutlined, BarcodeOutlined, TeamOutlined } from "@ant-design/icons";
+import { AimOutlined, BarcodeOutlined, LineChartOutlined, TeamOutlined } from "@ant-design/icons";
 
 
 export const adminTabs=[
@@ -6,6 +6,11 @@ export const adminTabs=[
         title:'Monitoring',
         value:'monitoring',
         icon: BarcodeOutlined
+    },
+    {
+        title:'Daily Matrix',
+        value:'daily_matrix',
+        icon: LineChartOutlined
     },
     {
         title:'Staff Details',

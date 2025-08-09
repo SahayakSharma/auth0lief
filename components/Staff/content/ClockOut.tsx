@@ -94,8 +94,10 @@ export default function ClockOut({ activity, setClockedOutNow }: { activity: Doc
                                     <Label className="text-[13px] font-light">{formatTime(activity?.clock_in_time)}</Label>
                                 </div>
                             </div>
-                            <Label>Additional Note</Label>
+                            <div className="px-15 py-10 flex flex-col gap-2">
+                                <Label>Additional Note</Label>
                             <Input value={note} onChange={(e)=>setNote(e.target.value)}/>
+                            </div>
                             <div className="px-15">
                                 <Button className="w-full" onClick={clockOut}>Clock Out Now</Button>
                             </div>
