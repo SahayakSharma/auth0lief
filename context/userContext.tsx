@@ -54,7 +54,12 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }, [user])
 
     return (
-        loading ? <p>Loading...</p> : <UserContext.Provider value={{ userDetails }}>
+        loading ? <div className="flex items-center justify-center min-h-screen bg-white">
+            <div className="flex flex-col items-center space-y-4">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
+                <p className="text-lg font-medium text-gray-600">Loading your data...</p>
+            </div>
+        </div> : <UserContext.Provider value={{ userDetails }}>
             {children}
         </UserContext.Provider>
     )

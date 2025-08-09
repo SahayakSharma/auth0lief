@@ -115,7 +115,7 @@ export default function Monitoring() {
 
                 <div className=" mx-auto  rounded-xl shadow-sm p-6 border border-gray-200">
                     <h2 className="text-lg font-semibold  mb-4">
-                        Weekly Check-Ins
+                        Weekly Clock-Ins
                     </h2>
                     <WeeklyCheckInChart activities={data.activities} />
                 </div>
