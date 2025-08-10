@@ -48,7 +48,7 @@ The staff members or the care workers can select a location from their dashboard
 
 ![WhatsApp Image 2025-08-10 at 16 22 05_085261ac](https://github.com/user-attachments/assets/fc3ba8d7-e5f3-4047-a61a-24f7df2aa72c)
 
-<h2>Staff/Care Worker</h2>
+<h2>Additional Features</h2>
 1. Taken care of that no staff member can clock in twice in 24 hours. Which means no staff member can have 2 shifts in a day or within 24 hrs. Example : if you clocked in at 8:00AM today, you can next clock in only after 8:00AM next day.
 
 <img width="1857" height="998" alt="image" src="https://github.com/user-attachments/assets/29bc7822-27cd-4bd4-8a1f-818da978fe3a" />
