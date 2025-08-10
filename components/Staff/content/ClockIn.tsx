@@ -115,7 +115,7 @@ export default function ClockIn({ registeredLocation, setClockedInNow }: { regis
                     <p>Clock In</p>
                 </div>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="w-[600px]">
                 <DialogTitle className="text-center">Clock in</DialogTitle>
                 {
                     loading ?

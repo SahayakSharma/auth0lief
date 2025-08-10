@@ -57,7 +57,7 @@ export default function SetNewLocation({addToLocation}:{addToLocation:(newLocati
                     Register New Location
                 </div>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="w-[600px]">
                 <DialogHeader>
                     <DialogTitle className="text-center">Register New Location</DialogTitle>
                     <DialogDescription className="text-center">

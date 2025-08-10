@@ -32,7 +32,7 @@ export default function DeleteLocation({ id, location,removeLocation }: { id: st
             <DialogTrigger>
                 <Trash className="text-[#a7a7a7] cursor-pointer" />
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="w-[600px]">
                 <DialogHeader>
                     <DialogTitle>Are you absolutely sure?</DialogTitle>
                     <DialogDescription>
